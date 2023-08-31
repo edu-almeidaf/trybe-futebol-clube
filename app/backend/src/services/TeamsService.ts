@@ -1,6 +1,6 @@
 import TeamsModel from '../models/TeamsModel';
-import { ITeams } from '../Interfaces/ITeams';
-import { ITeamsModel } from '../Interfaces/ITeamsModel';
+import { ITeams } from '../Interfaces/Teams/ITeams';
+import { ITeamsModel } from '../Interfaces/Teams/ITeamsModel';
 import { ServiceResponse } from '../Interfaces/ServiceResponse';
 
 export default class TeamsService {
