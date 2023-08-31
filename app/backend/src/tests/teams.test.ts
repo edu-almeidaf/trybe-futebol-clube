@@ -67,6 +67,6 @@ describe('Testes das rotas de teams', () => {
     const { status, body } = await chai.request(app).get('/teams/999');
 
     expect(status).to.equal(404);
-    expect(body).to.deep.equal('Team 999 not found');
+    expect(body.message).to.deep.equal('Team 999 not found');
   });
 });
