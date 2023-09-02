@@ -1,7 +1,7 @@
 export type ServiceMessage = { message: string };
 
 type ServiceResponseErrorType = 'BAD_REQUEST' | 'UNAUTHORIZED'
-| 'NOT_FOUND' | 'CONFLICT';
+| 'NOT_FOUND' | 'CONFLICT' | 'ERROR';
 
 export type ServiceResponseError = {
   status: ServiceResponseErrorType,

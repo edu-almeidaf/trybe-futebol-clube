@@ -28,4 +28,22 @@ export default class MatchesModel implements IMatchesModel {
 
     return data;
   }
+
+  async finishMatch(id: IMatches['id']): Promise<boolean> {
+    const data = await this.model.update({ inProgress: false }, { where: { id } });
+    console.log(data);
+    const [affectedRows] = data;
+
+    if (affectedRows === 0) return false;
+
+    return true;
+  }
+
+  async findById(id: IMatches['id']): Promise<IMatches | null> {
+    const data = await this.model.findByPk(id);
+    if (!data) return null;
+
+    const { homeTeamId, homeTeamGoals, awayTeamId, awayTeamGoals, inProgress }: IMatches = data;
+    return { id, homeTeamId, homeTeamGoals, awayTeamId, awayTeamGoals, inProgress };
+  }
 }
