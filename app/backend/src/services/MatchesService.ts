@@ -6,8 +6,13 @@ import { ServiceResponse } from '../Interfaces/ServiceResponse';
 export default class MatchesService {
   constructor(private matchesModel: IMatchesModel = new MatchesModel()) {}
 
-  public async findAll(): Promise<ServiceResponse<IMatches[]>> {
-    const data = await this.matchesModel.findAll();
+  public async findAll(inProgress: string): Promise<ServiceResponse<IMatches[]>> {
+    let data;
+    if (inProgress) {
+      data = await this.matchesModel.findByInProgress(inProgress === 'true');
+    } else {
+      data = await this.matchesModel.findAll();
+    }
     return { status: 'SUCCESSFUL', data };
   }
 }
