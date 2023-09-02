@@ -31,7 +31,7 @@ class UserValidations {
       return res.status(401).json({ message: validToken });
     }
 
-    req.body = { user: validToken };
+    req.body.user = validToken;
 
     next();
   }

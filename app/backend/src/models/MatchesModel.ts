@@ -1,7 +1,7 @@
 import SequelizeTeams from '../database/models/SequelizeTeams';
 import SequelizeMatches from '../database/models/SequelizeMatches';
 import { IMatches } from '../Interfaces/Match/IMatches';
-import { IMatchesModel } from '../Interfaces/Match/IMatchesModel';
+import { IMatchesModel, updateData } from '../Interfaces/Match/IMatchesModel';
 
 export default class MatchesModel implements IMatchesModel {
   private model = SequelizeMatches;
@@ -31,7 +31,7 @@ export default class MatchesModel implements IMatchesModel {
 
   async finishMatch(id: IMatches['id']): Promise<boolean> {
     const data = await this.model.update({ inProgress: false }, { where: { id } });
-    console.log(data);
+
     const [affectedRows] = data;
 
     if (affectedRows === 0) return false;
@@ -45,5 +45,19 @@ export default class MatchesModel implements IMatchesModel {
 
     const { homeTeamId, homeTeamGoals, awayTeamId, awayTeamGoals, inProgress }: IMatches = data;
     return { id, homeTeamId, homeTeamGoals, awayTeamId, awayTeamGoals, inProgress };
+  }
+
+  async update(id: number, newData: updateData): Promise<IMatches | null> {
+    console.log('id: ', id);
+    console.log('data: ', newData);
+
+    const data = await this.model.update(newData, { where: { id } });
+    console.log(data);
+
+    const [affectedRows] = data;
+
+    if (affectedRows === 0) return null;
+
+    return this.findById(id);
   }
 }

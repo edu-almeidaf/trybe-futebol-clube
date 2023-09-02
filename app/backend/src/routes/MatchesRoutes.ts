@@ -7,10 +7,17 @@ const matchesController = new MatchesController();
 const router = Router();
 
 router.get('/', (req: Request, res: Response) => matchesController.findAll(req, res));
+
 router.patch(
   '/:id/finish',
   UserValidations.validateToken,
   (req: Request, res: Response) => matchesController.finishMatch(req, res),
+);
+
+router.patch(
+  '/:id',
+  UserValidations.validateToken,
+  (req: Request, res: Response) => matchesController.update(req, res),
 );
 
 export default router;

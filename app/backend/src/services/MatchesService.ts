@@ -1,6 +1,6 @@
 import MatchesModel from '../models/MatchesModel';
 import { IMatches } from '../Interfaces/Match/IMatches';
-import { IMatchesModel } from '../Interfaces/Match/IMatchesModel';
+import { IMatchesModel, updateData } from '../Interfaces/Match/IMatchesModel';
 import { ServiceMessage, ServiceResponse } from '../Interfaces/ServiceResponse';
 
 export default class MatchesService {
@@ -32,5 +32,24 @@ export default class MatchesService {
     if (!verifyFinish) return { status: 'ERROR', data: { message: 'Unable to update match' } };
 
     return { status: 'SUCCESSFUL', data: { message: 'Finished' } };
+  }
+
+  public async update(id: number, newData: updateData): Promise<ServiceResponse<IMatches>> {
+    const data = await this.matchesModel.findById(id);
+
+    if (!data) return { status: 'NOT_FOUND', data: { message: `Match ${id} not found` } };
+
+    if (!data.inProgress) {
+      return { status: 'CONFLICT',
+        data: {
+          message: `Match ${id} already finished` },
+      };
+    }
+
+    const updatedData = await this.matchesModel.update(id, newData);
+
+    if (!updatedData) return { status: 'ERROR', data: { message: 'Unable to update match' } };
+
+    return { status: 'SUCCESSFUL', data: updatedData };
   }
 }
