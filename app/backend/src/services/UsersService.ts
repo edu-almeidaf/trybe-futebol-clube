@@ -22,4 +22,14 @@ export default class UsersService {
     const token = Jwt.sign({ email });
     return { status: 'SUCCESSFUL', data: { token } };
   }
+
+  public async findByEmail(email: string): Promise<ServiceResponse<string>> {
+    const data = await this.userModel.findByEmail(email);
+
+    if (!data) {
+      return { status: 'UNAUTHORIZED', data: { message: 'Email not found' } };
+    }
+
+    return { status: 'SUCCESSFUL', data: data.role };
+  }
 }
