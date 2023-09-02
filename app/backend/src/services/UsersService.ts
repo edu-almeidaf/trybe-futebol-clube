@@ -14,9 +14,8 @@ export default class UsersService {
   public async login({ email, password }: Ilogin): Promise<ServiceResponse<
   IToken | ServiceMessage>> {
     const data = await this.userModel.findByEmail(email);
-    if (!data) return { status: 'NOT_FOUND', data: { message: 'User not found' } };
 
-    if (!bcrypt.compareSync(password, data.password)) {
+    if (!data || !bcrypt.compareSync(password, data.password)) {
       return { status: 'UNAUTHORIZED', data: { message: 'Invalid email or password' } };
     }
 

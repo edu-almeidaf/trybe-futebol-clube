@@ -8,6 +8,12 @@ class UserValidations {
       return res.status(400).json({ message: 'All fields must be filled' });
     }
 
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(email) || password.length < 6) {
+      return res.status(401).json({ message: 'Invalid email or password' });
+    }
+
     next();
   }
 }
