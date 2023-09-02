@@ -21,4 +21,10 @@ export default class MatchesController {
     const { status, data } = await this.matchesService.update(Number(id), req.body);
     return res.status(mapHTTPStatus(status)).json(data);
   }
+
+  public async create(req: Request, res: Response): Promise<Response> {
+    const { status, data } = await this.matchesService.create(req.body);
+
+    return res.status(mapHTTPStatus(status)).json(data);
+  }
 }

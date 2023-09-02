@@ -1,3 +1,4 @@
+import { NewObject } from '../Interfaces';
 import SequelizeTeams from '../database/models/SequelizeTeams';
 import SequelizeMatches from '../database/models/SequelizeMatches';
 import { IMatches } from '../Interfaces/Match/IMatches';
@@ -59,5 +60,12 @@ export default class MatchesModel implements IMatchesModel {
     if (affectedRows === 0) return null;
 
     return this.findById(id);
+  }
+
+  async create(match: NewObject<IMatches>): Promise<IMatches> {
+    const data = await this.model.create(match);
+
+    const { id, homeTeamId, homeTeamGoals, awayTeamId, awayTeamGoals, inProgress }: IMatches = data;
+    return { id, homeTeamId, homeTeamGoals, awayTeamId, awayTeamGoals, inProgress };
   }
 }
