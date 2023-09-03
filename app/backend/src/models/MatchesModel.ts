@@ -41,7 +41,12 @@ export default class MatchesModel implements IMatchesModel {
   }
 
   async findById(id: IMatches['id']): Promise<IMatches | null> {
-    const data = await this.model.findByPk(id);
+    const data = await this.model.findByPk(id, {
+      include: [
+        { model: SequelizeTeams, as: 'homeTeam', attributes: ['teamName'] },
+        { model: SequelizeTeams, as: 'awayTeam', attributes: ['teamName'] },
+      ],
+    });
     if (!data) return null;
 
     const { homeTeamId, homeTeamGoals, awayTeamId, awayTeamGoals, inProgress }: IMatches = data;
@@ -49,9 +54,6 @@ export default class MatchesModel implements IMatchesModel {
   }
 
   async update(id: number, newData: updateData): Promise<IMatches | null> {
-    console.log('id: ', id);
-    console.log('data: ', newData);
-
     const data = await this.model.update(newData, { where: { id } });
     console.log(data);
 

@@ -12,5 +12,5 @@ export interface IMatchesModel {
   finishMatch(id: IMatches['id']): Promise<boolean>;
   findById(id: IMatches['id']): Promise<IMatches | null>;
   update(id: IMatches['id'], newData: updateData): Promise<IMatches | null>;
-  create(data: NewObject<IMatches>): Promise<IMatches>;
+  create(match: NewObject<IMatches>): Promise<IMatches>;
 }
