@@ -34,8 +34,7 @@ SELECT t.team_name AS name,
   INNER JOIN matches AS m
   ON t.id = m.home_team_id
   WHERE m.in_progress = 0
-  GROUP BY t.id
-  ORDER BY goalsFavor DESC;
+  GROUP BY t.id;
 `;
 
 const checkEfficiency = (P: number, J: number): string => {
