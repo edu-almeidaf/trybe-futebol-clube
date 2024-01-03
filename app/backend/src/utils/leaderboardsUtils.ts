@@ -46,7 +46,6 @@ const convertData = (data: ILeaderBoardsQueryResult[]): ILeaderBoards[] => {
   const dataFiltered = data.map((info) => ({
     ...info,
     totalPoints: Number(info.totalPoints),
-    totalGames: Number(info.totalGames),
     totalVictories: Number(info.totalVictories),
     totalDraws: Number(info.totalDraws),
     totalLosses: Number(info.totalLosses),
